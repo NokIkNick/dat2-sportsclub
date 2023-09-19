@@ -25,7 +25,7 @@ public class Main {
         List<GendervarietyDTO> genderVariety = memberMapper.getGenderVariety();
         List<TeamIncomeDTO> teamIncome = memberMapper.getSumOfIncomePerTeam();
         List<TeamIncomeDTO> averageTeamIncome = memberMapper.getAverageIncomePerTeam();
-        registrationMapper.addToTeam(1,"yo02",157);
+        //registrationMapper.addToTeam(1,"yo02",157);
         List<Registration> registrations = registrationMapper.getAllRegistrations();
         showMembers(registrations);
         //showMembers(averageTeamIncome);
