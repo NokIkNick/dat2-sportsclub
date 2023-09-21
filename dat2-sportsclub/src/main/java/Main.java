@@ -1,11 +1,10 @@
-import dk.cphbusiness.cphnw89.dtos.GendervarietyDTO;
-import dk.cphbusiness.cphnw89.dtos.NumberOfParticipentsDTO;
-import dk.cphbusiness.cphnw89.dtos.TeamIncomeDTO;
+import dk.cphbusiness.cphnw89.dtos.LaanerAndLaantDTO;
+import entities.Book;
+import entities.Laaner;
 import entities.Member;
-import entities.Registration;
+import persistence.BibliotekMapper;
 import persistence.Database;
 import persistence.MemberMapper;
-import persistence.RegistrationMapper;
 
 import java.util.List;
 
@@ -13,24 +12,27 @@ public class Main {
 
     private final static String USER = "postgres";
     private final static String PASSWORD = "postgres";
-    private final static String URL = "jdbc:postgresql://localhost:5432/sportsclub?serverTimezone=CET&useSSL=false&allowPublicKeyRetrieval=true";
+    private final static String URL = "jdbc:postgresql://localhost:5432/bibliotek?serverTimezone=CET&useSSL=false&allowPublicKeyRetrieval=true";
 
     public static void main(String[] args) {
 
         Database db = new Database(USER, PASSWORD, URL);
-        MemberMapper memberMapper = new MemberMapper(db);
-        RegistrationMapper registrationMapper = new RegistrationMapper(db);
-        List<Member> members = memberMapper.getAllMembers();
-        List<NumberOfParticipentsDTO> participents = memberMapper.getAllParticipentsPerSport();
-        List<GendervarietyDTO> genderVariety = memberMapper.getGenderVariety();
-        List<TeamIncomeDTO> teamIncome = memberMapper.getSumOfIncomePerTeam();
-        List<TeamIncomeDTO> averageTeamIncome = memberMapper.getAverageIncomePerTeam();
-        //registrationMapper.addToTeam(1,"yo02",157);
-        List<Registration> registrations = registrationMapper.getAllRegistrations();
-        showMembers(registrations);
-        //showMembers(averageTeamIncome);
-        //showMembers(genderVariety);
-        //System.out.println(memberMapper.getSumIncomeOfAllTeams());
+        BibliotekMapper bibliotekMapper = new BibliotekMapper(db);
+        System.out.println(bibliotekMapper.getLaanerById(1));
+        bibliotekMapper.insertLaaner(new Laaner("Nicklas","Hareskovvej 25",2700));
+        List<Laaner> laaners = bibliotekMapper.getAllLaaners();
+        List<Book> books = bibliotekMapper.getAllBooks();
+        Book book1 = books.get(1);
+        System.out.println(book1);
+        System.out.println(bibliotekMapper.updateBookTitel(book1, "A new hope!"));
+
+        //bibliotekMapper.deleteUdlaan(6,2);
+
+        //List<Book> books = bibliotekMapper.getAllBooks();
+        //List<LaanerAndLaantDTO> udlaan = bibliotekMapper.getAllLUdlaan();
+        showMembers(books);
+
+
         //showMembers(members);
         //showMemberById(memberMapper, 13);
 
